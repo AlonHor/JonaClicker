@@ -151,6 +151,19 @@ function App() {
     <div>
       <button onClick={() => setCount((c) => c + 1)}>
         <img src={jona} alt="jona" width={200} />
+      </button>
+      <div
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          textAlign: 'left',
+          paddingLeft: '2em',
+          fontSize: '1.5em',
+          fontWeight: 'bold',
+          fontFamily: 'monospace',
+        }}
+      >
         <br />
         prestige: {prestige}
         <br />
@@ -158,9 +171,15 @@ function App() {
         <br />
         prestige multiplier: {prestigeMultiplier}
         <br />
-      </button>
+      </div>
       <br />
-      <div>
+      <div
+        style={{
+          fontSize: '1.2em',
+          fontWeight: 'bold',
+          fontFamily: 'monospace',
+        }}
+      >
         <h1>{count}</h1>
       </div>
       <div
@@ -169,6 +188,9 @@ function App() {
           height: '50vh',
           width: '50vw',
           backgroundColor: 'rgb(63, 63, 63)',
+          fontSize: '1.2em',
+          fontWeight: 'bold',
+          fontFamily: 'monospace',
         }}
         className="card"
       >
