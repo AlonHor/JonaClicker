@@ -7,12 +7,14 @@ function App() {
     name: string
     description: string
     price: number
+    perm: boolean
   }
 
   const [count, setCount] = useState<number>(0)
   const [upgrades, setUpgrades] = useState<Upgrade[]>([])
   const [prestige, setPrestige] = useState<number>(0)
   const [prestigeNeeded, setPrestigeNeeded] = useState<number>(10000000)
+  const [canPrestige, setCanPrestige] = useState<boolean>(false)
 
   useEffect(() => {
     setPrestige(
@@ -33,6 +35,19 @@ function App() {
     )
   }, [])
 
+  function doPrestige() {
+    setCanPrestige(false)
+    setPrestige((p) => p + 1)
+    setCount(0)
+    setPrestigeNeeded((p) => p * prestigeMultiplier)
+    setUpgrades([])
+    window.location.reload()
+  }
+
+  function numberWithCommas(x: number) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+  }
+
   useEffect(() => {
     localStorage.setItem('count', count.toString())
     localStorage.setItem('prestige', prestige.toString())
@@ -40,13 +55,7 @@ function App() {
     localStorage.setItem('upgrades', JSON.stringify(upgrades))
 
     if (count >= prestigeNeeded) {
-      console.log(count)
-      console.log(prestigeNeeded)
-      setPrestige((p) => p + 1)
-      setCount(0)
-      setPrestigeNeeded((p) => p * prestigeMultiplier)
-      setUpgrades([])
-      window.location.reload()
+      if (!canPrestige) setCanPrestige(true)
     }
   }, [count, prestige, prestigeNeeded, upgrades])
 
@@ -112,62 +121,73 @@ function App() {
 
   const availableUpgrades: Upgrade[] = [
     {
+      name: 'AntiCheat Bypass',
+      description: 'These allow you to click twice as fast!',
+      price: 25,
+      perm: true,
+    },
+    {
       name: 'Grandma',
       description: "A grandma's average cps is 2!",
       price: 50,
+      perm: false,
     },
     {
       name: 'Farm',
       description: 'Farms MMC players for clicks. Average cps is 4!',
       price: 200,
+      perm: false,
     },
     {
       name: 'Jitter',
       description:
         'Jitter clicking can be quite good. But ur not good at it. Average cps is 8!',
       price: 1000,
+      perm: false,
     },
     {
       name: 'Jona',
       description: 'Jona can click faster than you can. Average cps is 14!',
       price: 10000,
+      perm: false,
     },
     {
       name: 'Balls',
       description:
         "It's a new clicking method invented by Jona himself. It can do around 20 cps!",
       price: 50000,
+      perm: false,
     },
     {
       name: 'Autoclicker',
       description: 'Autoclickers are the best. This one can click 28 cps!',
       price: 100000,
+      perm: false,
     },
     {
       name: 'OP Autoclicker',
       description: 'OP Autoclickers are even better! Average cps is 56!',
       price: 1000000,
+      perm: false,
     },
   ]
 
   return (
     <div>
-      <button onClick={() => setCount((c) => c + 1)}>
+      <button
+        onClick={() => {
+          const double: number =
+            upgrades.filter((u) => u.name === 'AntiCheat Bypass').length > 0
+              ? 2
+              : 1
+          setCount((c) => c + 1 * double)
+        }}
+      >
         <img src={jona} alt="jona" width={200} />
       </button>
       <button
-        style={{
-          position: 'absolute',
-          top: '0',
-          right: '0',
-          backgroundColor: 'red',
-          color: 'white',
-          marginTop: '1em',
-          marginRight: '1em',
-          border: 'none',
-          borderRadius: '5px',
-          cursor: 'pointer',
-        }}
+        style={{}}
+        className="resetButton"
         onClick={() => {
           setCount(0)
           setPrestige(0)
@@ -177,6 +197,13 @@ function App() {
         }}
       >
         RESET
+      </button>
+      <button
+        className="prestigeButton"
+        onClick={doPrestige}
+        disabled={!canPrestige}
+      >
+        PRESTIGE
       </button>
       <div
         style={{
@@ -189,16 +216,14 @@ function App() {
         }}
       >
         <br />
-        prestige: {prestige}
+        Prestige: {numberWithCommas(prestige)}
         <br />
-        prestige needed: {prestigeNeeded}
-        <br />
-        prestige multiplier: {prestigeMultiplier}
+        Next Prestige Requires: {numberWithCommas(prestigeNeeded)}
         <br />
       </div>
       <br />
       <div>
-        <h1>{count}</h1>
+        <h1>{numberWithCommas(count)}</h1>
       </div>
       <div
         style={{
@@ -214,27 +239,41 @@ function App() {
             <button
               onClick={() => {
                 if (count >= upgrade.price) {
-                  setUpgrades([
-                    ...upgrades,
-                    {
-                      name: upgrade.name,
-                      description: upgrade.description,
-                      price: upgrade.price,
-                    },
-                  ])
-                  setCount((c) => c - upgrade.price)
+                  let eligible = true
+                  if (upgrade.perm)
+                    eligible =
+                      upgrades.filter((u) => u.name === upgrade.name).length ===
+                      0
+                  if (eligible) {
+                    setUpgrades([
+                      ...upgrades,
+                      {
+                        name: upgrade.name,
+                        description: upgrade.description,
+                        price: upgrade.price,
+                        perm: upgrade.perm,
+                      },
+                    ])
+                    setCount((c) => c - upgrade.price)
+                  }
                 }
               }}
               style={{ marginBottom: '10px' }}
               className="card"
               disabled={count < upgrade.price}
+              hidden={
+                upgrade.perm &&
+                upgrades.filter((u) => u.name === upgrade.name).length > 0
+              }
             >
               <h2>
                 {upgrade.name}{' '}
-                {upgrades.filter((u) => u.name === upgrade.name).length}
+                {numberWithCommas(
+                  upgrades.filter((u) => u.name === upgrade.name).length
+                )}
               </h2>
               <h4>{upgrade.description}</h4>
-              <p>Cost: {upgrade.price} clicks</p>
+              <p>Cost: {numberWithCommas(upgrade.price)} clicks</p>
             </button>
           </div>
         ))}

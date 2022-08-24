@@ -79,3 +79,51 @@ button:hover {
 ::-webkit-scrollbar-thumb:hover {
   background: rgb(0, 114, 38);
 }
+
+.prestigeButton {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background-color: #008d30;
+  color: #fff;
+  margin-bottom: 1em;
+  margin-right: 1em;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.25s ease-in-out;
+}
+
+.prestigeButton:disabled {
+  background-color: #1a1a1a;
+  color: #fff;
+  cursor: default;
+}
+
+.prestigeButton:hover:not(:disabled) {
+  background-color: #00a035;
+}
+
+.resetButton {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: #970000;
+  color: #fff;
+  margin-top: 1em;
+  margin-right: 1em;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.25s ease-in-out;
+}
+
+.resetButton:disabled {
+  background-color: #1a1a1a;
+  color: #fff;
+  cursor: default;
+}
+
+.resetButton:hover:not(:disabled) {
+  background-color: #b30000;
+}
