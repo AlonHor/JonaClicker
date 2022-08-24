@@ -11,6 +11,43 @@ function App() {
 
   const [count, setCount] = useState<number>(0)
   const [upgrades, setUpgrades] = useState<Upgrade[]>([])
+  const [prestige, setPrestige] = useState<number>(0)
+  const [prestigeNeeded, setPrestigeNeeded] = useState<number>(10000000)
+
+  useEffect(() => {
+    setPrestige(
+      localStorage.getItem('prestige')
+        ? parseInt(localStorage.getItem('prestige') as string)
+        : 0
+    )
+    setPrestigeNeeded(
+      localStorage.getItem('prestigeNeeded')
+        ? parseInt(localStorage.getItem('prestigeNeeded') as string)
+        : 10000000
+    )
+    setUpgrades(JSON.parse(localStorage.getItem('upgrades') as string) || [])
+    setCount(
+      localStorage.getItem('count')
+        ? parseInt(localStorage.getItem('count') as string)
+        : 0
+    )
+  }, [])
+
+  useEffect(() => {
+    localStorage.setItem('count', count.toString())
+    localStorage.setItem('prestige', prestige.toString())
+    localStorage.setItem('prestigeNeeded', prestigeNeeded.toString())
+    localStorage.setItem('upgrades', JSON.stringify(upgrades))
+    if (count >= prestigeNeeded) {
+      console.log(count)
+      console.log(prestigeNeeded)
+      setPrestige((p) => p + 1)
+      setCount(0)
+      setPrestigeNeeded((p) => p * prestigeMultiplier)
+    }
+  }, [count, prestige, prestigeNeeded, upgrades])
+
+  const prestigeMultiplier = 2
 
   window.addEventListener('selectstart', (e) => {
     e.preventDefault()
@@ -21,21 +58,41 @@ function App() {
   useEffect(() => {
     clearInterval(interval)
     interval = setInterval(() => {
-      setCount((c) => c + upgrades.filter((u) => u.name === 'Grandma').length) // 2 cps
-      setCount((c) => c + upgrades.filter((u) => u.name === 'Farm').length * 2) // 4 cps
+      const multiplier = prestige === 0 ? 1 : prestigeMultiplier * prestige
       setCount(
-        (c) => c + upgrades.filter((u) => u.name === 'Jitter').length * 4
+        (c) =>
+          c + upgrades.filter((u) => u.name === 'Grandma').length * multiplier
+      ) // 2 cps
+      setCount(
+        (c) =>
+          c + upgrades.filter((u) => u.name === 'Farm').length * 2 * multiplier
+      ) // 4 cps
+      setCount(
+        (c) =>
+          c +
+          upgrades.filter((u) => u.name === 'Jitter').length * 4 * multiplier
       ) // 8 cps
       setCount(
-        (c) => c + upgrades.filter((u) => u.name === 'Jona').length * 4 * 1.75
+        (c) =>
+          c +
+          upgrades.filter((u) => u.name === 'Jona').length *
+            4 *
+            1.75 *
+            multiplier
       ) // 14 cps
       setCount(
-        (c) => c + upgrades.filter((u) => u.name === 'Balls').length * 10
+        (c) =>
+          c +
+          upgrades.filter((u) => u.name === 'Balls').length * 10 * multiplier
       ) // 20 cps
       setCount(
         (c) =>
           c +
-          upgrades.filter((u) => u.name === 'Autoclicker').length * 4 * 1.75 * 2
+          upgrades.filter((u) => u.name === 'Autoclicker').length *
+            4 *
+            1.75 *
+            2 *
+            multiplier
       ) // 28 cps
       setCount(
         (c) =>
@@ -44,7 +101,8 @@ function App() {
             4 *
             1.75 *
             2 *
-            2
+            2 *
+            multiplier
       ) // 56 cps
     }, 500)
   }, [upgrades])
@@ -93,6 +151,13 @@ function App() {
     <div>
       <button onClick={() => setCount((c) => c + 1)}>
         <img src={jona} alt="jona" width={200} />
+        <br />
+        prestige: {prestige}
+        <br />
+        prestige needed: {prestigeNeeded}
+        <br />
+        prestige multiplier: {prestigeMultiplier}
+        <br />
       </button>
       <br />
       <div>
