@@ -46,6 +46,7 @@ function App() {
       setCount(0)
       setPrestigeNeeded((p) => p * prestigeMultiplier)
       setUpgrades([])
+      window.location.reload()
     }
   }, [count, prestige, prestigeNeeded, upgrades])
 
