@@ -56,19 +56,6 @@ button:hover {
   border-color: #008d36;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #214734;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #006329;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
-}
-
 .card {
   padding: 1em;
   border-radius: 8px;
