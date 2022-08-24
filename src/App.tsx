@@ -30,6 +30,9 @@ function App() {
         (c) => c + upgrades.filter((u) => u.name === 'Jona').length * 4 * 1.75
       ) // 14 cps
       setCount(
+        (c) => c + upgrades.filter((u) => u.name === 'Balls').length * 10
+      ) // 20 cps
+      setCount(
         (c) =>
           c +
           upgrades.filter((u) => u.name === 'Autoclicker').length * 4 * 1.75 * 2
@@ -69,8 +72,14 @@ function App() {
       price: 10000,
     },
     {
+      name: 'Balls',
+      description:
+        "It's a new clicking method invented by Jona himself. It can do around 20 cps!",
+      price: 50000,
+    },
+    {
       name: 'Autoclicker',
-      description: 'Autoclickers are the best. Average cps is 28!',
+      description: 'Autoclickers are the best. This one can click 28 cps!',
       price: 100000,
     },
     {
