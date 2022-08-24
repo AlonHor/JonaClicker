@@ -49,11 +49,17 @@ button {
   font-weight: 500;
   font-family: inherit;
   background-color: #1a1a1a;
+  color: rgba(255, 255, 255, 0.87);
   cursor: pointer;
   transition: border-color 0.25s;
 }
-button:hover {
+button:hover:not(:disabled) {
   border-color: #008d36;
+}
+button:disabled {
+  background-color: #242424;
+  color: rgba(255, 255, 255, 0.5);
+  cursor: default;
 }
 
 .card {
