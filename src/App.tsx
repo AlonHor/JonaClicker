@@ -38,12 +38,14 @@ function App() {
     localStorage.setItem('prestige', prestige.toString())
     localStorage.setItem('prestigeNeeded', prestigeNeeded.toString())
     localStorage.setItem('upgrades', JSON.stringify(upgrades))
+
     if (count >= prestigeNeeded) {
       console.log(count)
       console.log(prestigeNeeded)
       setPrestige((p) => p + 1)
       setCount(0)
       setPrestigeNeeded((p) => p * prestigeMultiplier)
+      setUpgrades([])
     }
   }, [count, prestige, prestigeNeeded, upgrades])
 
@@ -152,6 +154,29 @@ function App() {
       <button onClick={() => setCount((c) => c + 1)}>
         <img src={jona} alt="jona" width={200} />
       </button>
+      <button
+        style={{
+          position: 'absolute',
+          top: '0',
+          right: '0',
+          backgroundColor: 'red',
+          color: 'white',
+          marginTop: '1em',
+          marginRight: '1em',
+          border: 'none',
+          borderRadius: '5px',
+          cursor: 'pointer',
+        }}
+        onClick={() => {
+          setCount(0)
+          setPrestige(0)
+          setPrestigeNeeded(10000000)
+          setUpgrades([])
+          window.location.reload()
+        }}
+      >
+        RESET
+      </button>
       <div
         style={{
           position: 'absolute',
@@ -159,9 +184,7 @@ function App() {
           left: 0,
           textAlign: 'left',
           paddingLeft: '2em',
-          fontSize: '1.5em',
-          fontWeight: 'bold',
-          fontFamily: 'monospace',
+          fontSize: '1.2em',
         }}
       >
         <br />
@@ -173,13 +196,7 @@ function App() {
         <br />
       </div>
       <br />
-      <div
-        style={{
-          fontSize: '1.2em',
-          fontWeight: 'bold',
-          fontFamily: 'monospace',
-        }}
-      >
+      <div>
         <h1>{count}</h1>
       </div>
       <div
@@ -188,9 +205,6 @@ function App() {
           height: '50vh',
           width: '50vw',
           backgroundColor: 'rgb(63, 63, 63)',
-          fontSize: '1.2em',
-          fontWeight: 'bold',
-          fontFamily: 'monospace',
         }}
         className="card"
       >

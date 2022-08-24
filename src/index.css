@@ -31,6 +31,9 @@ body {
   min-width: 320px;
   min-height: 100vh;
   -webkit-tap-highlight-color: transparent;
+  font-size: 1.15em;
+  font-weight: bold;
+  font-family: monospace;
 }
 
 h1 {
