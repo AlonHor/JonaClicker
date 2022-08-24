@@ -17,22 +17,24 @@ function App() {
   const [canPrestige, setCanPrestige] = useState<boolean>(false)
 
   useEffect(() => {
-    setPrestige(
-      localStorage.getItem('prestige')
-        ? parseInt(localStorage.getItem('prestige') as string)
-        : 0
-    )
-    setPrestigeNeeded(
-      localStorage.getItem('prestigeNeeded')
-        ? parseInt(localStorage.getItem('prestigeNeeded') as string)
-        : 10000000
-    )
-    setUpgrades(JSON.parse(localStorage.getItem('upgrades') as string) || [])
-    setCount(
-      localStorage.getItem('count')
-        ? parseInt(localStorage.getItem('count') as string)
-        : 0
-    )
+    try {
+      setPrestige(
+        localStorage.getItem('prestige')
+          ? parseInt(localStorage.getItem('prestige') as string)
+          : 0
+      )
+      setPrestigeNeeded(
+        localStorage.getItem('prestigeNeeded')
+          ? parseInt(localStorage.getItem('prestigeNeeded') as string)
+          : 10000000
+      )
+      setUpgrades(JSON.parse(localStorage.getItem('upgrades') as string) || [])
+      setCount(
+        localStorage.getItem('count')
+          ? parseInt(localStorage.getItem('count') as string)
+          : 0
+      )
+    } catch (e) {}
   }, [])
 
   function doPrestige() {
@@ -122,7 +124,7 @@ function App() {
   const availableUpgrades: Upgrade[] = [
     {
       name: 'AntiCheat Bypass',
-      description: 'These allow you to click twice as fast!',
+      description: 'Allows you to click twice as fast!',
       price: 25,
       perm: true,
     },
@@ -268,9 +270,10 @@ function App() {
             >
               <h2>
                 {upgrade.name}{' '}
-                {numberWithCommas(
-                  upgrades.filter((u) => u.name === upgrade.name).length
-                )}
+                {!upgrade.perm &&
+                  numberWithCommas(
+                    upgrades.filter((u) => u.name === upgrade.name).length
+                  )}
               </h2>
               <h4>{upgrade.description}</h4>
               <p>Cost: {numberWithCommas(upgrade.price)} clicks</p>
