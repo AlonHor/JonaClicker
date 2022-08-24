@@ -61,7 +61,7 @@ function App() {
     }
   }, [count, prestige, prestigeNeeded, upgrades])
 
-  const prestigeMultiplier = 2
+  const prestigeMultiplier = 5
 
   window.addEventListener('selectstart', (e) => {
     e.preventDefault()
@@ -72,19 +72,19 @@ function App() {
   useEffect(() => {
     clearInterval(interval)
     interval = setInterval(() => {
-      const multiplier = prestige === 0 ? 1 : prestigeMultiplier * prestige
+      const multiplier = prestige === 0 ? 5 : prestigeMultiplier * prestige
       setCount(
         (c) =>
           c + upgrades.filter((u) => u.name === 'Grandma').length * multiplier
       ) // 2 cps
       setCount(
         (c) =>
-          c + upgrades.filter((u) => u.name === 'Farm').length * 2 * multiplier
+          c + upgrades.filter((u) => u.name === 'Farm').length * 4 * multiplier
       ) // 4 cps
       setCount(
         (c) =>
           c +
-          upgrades.filter((u) => u.name === 'Jitter').length * 4 * multiplier
+          upgrades.filter((u) => u.name === 'Jitter').length * 6 * multiplier
       ) // 8 cps
       setCount(
         (c) =>
