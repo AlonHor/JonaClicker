@@ -16,12 +16,12 @@ function App() {
   const [prestigeNeeded, setPrestigeNeeded] = useState<number>(10000000)
   const [canPrestige, setCanPrestige] = useState<boolean>(false)
   const [availableUpgrades, setAvailableUpgrades] = useState<Upgrade[]>([
-     {
-      name: 'Ant',
-      description: 'Allows you to click as fast as garrfild the cat!',
-      price: 1,
+    {
+      name: 'Garfield',
+      description: 'Allows you to click as fast as Garfield! (1 cps... which is not really fast btw)',
+      price: 10,
       perm: false,
-    }, 
+    },
     {
       name: 'AntiCheat Bypass',
       description: 'Allows you to click twice as fast!',
@@ -159,6 +159,10 @@ function App() {
     clearInterval(interval)
     interval = setInterval(() => {
       const multiplier = prestige === 0 ? 5 : prestigeMultiplier * prestige
+      setCount(
+        (c) =>
+          c + upgrades.filter((u) => u.name === 'Garfield').length / 2 * multiplier
+      ) // 1 cps
       setCount(
         (c) =>
           c + upgrades.filter((u) => u.name === 'Grandma').length * multiplier
