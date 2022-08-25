@@ -16,6 +16,12 @@ function App() {
   const [prestigeNeeded, setPrestigeNeeded] = useState<number>(10000000)
   const [canPrestige, setCanPrestige] = useState<boolean>(false)
   const [availableUpgrades, setAvailableUpgrades] = useState<Upgrade[]>([
+     {
+      name: 'Ant',
+      description: 'Allows you to click as fast as garrfild the cat!',
+      price: 1,
+      perm: false,
+    }, 
     {
       name: 'AntiCheat Bypass',
       description: 'Allows you to click twice as fast!',
@@ -87,12 +93,6 @@ function App() {
       price: 10000000000,
       perm: false,
     },
-    {
-      name: 'Ant',
-      description: 'Allows you to click twiceses as fast!',
-      price: 1,
-      perm: false,
-    }, 
   ])
 
   useEffect(() => {
