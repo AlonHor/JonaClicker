@@ -87,6 +87,12 @@ function App() {
       price: 10000000000,
       perm: false,
     },
+    {
+      name: 'Ant',
+      description: 'Allows you to click twiceses as fast!',
+      price: 1,
+      perm: false,
+    }, 
   ])
 
   useEffect(() => {
