@@ -86,12 +86,6 @@ function App() {
       const multiplier = prestige === 0 ? 5 : prestigeMultiplier * prestige
       setCount(
         (c) =>
-          c +
-          (upgrades.filter((u) => u.name === 'Garfield').length / 2) *
-            multiplier
-      ) // 1 cps
-      setCount(
-        (c) =>
           c + upgrades.filter((u) => u.name === 'Grandma').length * multiplier
       ) // 2 cps
       setCount(
