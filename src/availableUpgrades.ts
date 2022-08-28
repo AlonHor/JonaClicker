@@ -1,12 +1,5 @@
 export default [
   {
-    name: 'Garfield',
-    description:
-      'Allows you to click as fast as Garfield! (1 cps... which is not really fast btw)',
-    price: 10,
-    perm: false,
-  },
-  {
     name: 'AntiCheat Bypass',
     description: 'Allows you to click twice as fast!',
     price: 25,
